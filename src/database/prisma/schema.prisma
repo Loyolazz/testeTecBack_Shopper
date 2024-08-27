@@ -19,6 +19,7 @@ model Reading {
   id           String   @id @default(uuid())
   customerCode String
   value        Float
+  measureType  String?
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
 }
