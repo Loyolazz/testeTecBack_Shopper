@@ -31,28 +31,19 @@ This project is a backend service built with Node.js and TypeScript to manage wa
    ```sh
    docker-compose up --build
 
-5. Running the Project
+5. Entrar no Container
+   ```sh
+   docker exec -it testetecback_shopper-app-1 /bin/sh
+
+6. Running the Project
 To start the server:
    ```sh
    npm run start
 
 The server will run on http://localhost:3000.
 
-6. Running Tests
+7. Running Tests
    ```sh
    npm run dev
 
 ## Project Structure
-**src/controllers/**: Handles HTTP requests and responses.
-
-**src/services/**: Contains business logic and interactions with external APIs.
-
-**src/models/**: Database models and queries.
-
-**src/routes/**: Defines the application routes.
-
-**src/middlewares/**: Middleware functions for validation and error handling.
-
-**src/config/**: Configuration files for the application.
-
-**src/utils/**: Utility functions and helpers.

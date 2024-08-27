@@ -1,6 +1,6 @@
 import { prisma } from '../database/index';
-import { CreateImageDTO } from '../dtos/CreateImageDTO';
-import { ImageEntity } from '../entities/ImageEntity';
+import { CreateImageDTO } from '../dtos/createImageDTO';
+import { ImageEntity } from '../entities/imageEntity';
 
 export class ImageRepository {
     async create(data: CreateImageDTO): Promise<ImageEntity> {
@@ -13,3 +13,4 @@ export class ImageRepository {
         return new ImageEntity(image.id, image.customerCode, image.imageUrl, image.createdAt, image.updatedAt);
     }
 }
+

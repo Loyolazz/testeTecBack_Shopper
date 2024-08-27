@@ -8,18 +8,20 @@ datasource db {
 }
 
 model Image {
-  id          String   @id @default(uuid())
+  id           String   @id @default(uuid())
   customerCode String
-  imageUrl    String
-  createdAt   DateTime @default(now())
-  updatedAt   DateTime @updatedAt
+  imageUrl     String
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
 }
 
 model Reading {
-  id           String   @id @default(uuid())
-  customerCode String
-  value        Float
-  measureType  String?
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id              String   @id @default(uuid())
+  customerCode    String
+  value           Int
+  measureType     String
+  measureUuid     String
+  measureDatetime DateTime
+  createdAt       DateTime @default(now())
+  updatedAt       DateTime @updatedAt
 }

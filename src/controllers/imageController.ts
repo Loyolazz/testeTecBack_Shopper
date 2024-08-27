@@ -1,14 +1,24 @@
 import { Request, Response } from 'express';
 import { ImageService } from '../services/imageService';
 
-export class ImageController {
-    static async uploadImage(req: Request, res: Response) {
-        try {
-            const { customer_code, measure_datetime, measure_type, image } = req.body;
-            const result = await ImageService.processImage(customer_code, measure_datetime, measure_type, image);
-            res.status(200).json(result);
-        } catch (error) {
-            res.status(500).json({ error: 'Failed to process image' });
-        }
+const imageService = new ImageService();
+
+export const uploadImage = async (req: Request, res: Response) => {
+    const { image, customer_code, measure_datetime, measure_type } = req.body;
+
+    try {
+        const result = await imageService.processImage({
+            image,
+            customerCode: customer_code,
+            measureDatetime: new Date(measure_datetime),
+            measureType: measure_type,
+        });
+
+        return res.status(200).json(result);
+    } catch (error: any) {
+        return res.status(error.status || 500).json({
+            error_code: error.code || 'INTERNAL_SERVER_ERROR',
+            error_description: error.message,
+        });
     }
-}
+};
