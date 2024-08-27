@@ -1,0 +1,24 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model Image {
+  id          String   @id @default(uuid())
+  customerCode String
+  imageUrl    String
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model Reading {
+  id           String   @id @default(uuid())
+  customerCode String
+  value        Float
+  createdAt    DateTime @default(now())
+  updatedAt    DateTime @updatedAt
+}
