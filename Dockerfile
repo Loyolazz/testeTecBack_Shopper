@@ -1,23 +1,20 @@
-# Usando a imagem oficial do Node.js
-FROM node:18
+FROM node:18-alpine AS builder
 
-# Definindo o diretório de trabalho na imagem
 WORKDIR /app
 
-# Copiando os arquivos package.json e package-lock.json
 COPY package*.json ./
-
-# Instalando as dependências
 RUN npm install
-
-# Copiando
 COPY . .
-
-# Compilando o código TypeScript
 RUN npm run build
+RUN npx prisma generate dev
 
-# Expondo a porta da aplicação
+FROM node:18-alpine
+
+WORKDIR /app
+
+COPY --from=builder /app/dist ./dist
+COPY --from=builder /app/node_modules ./node_modules
+
 EXPOSE 3000
 
-# Comando para rodar a aplicação
-CMD ["npm", "run", "start"]
+CMD ["npm", "start"]
