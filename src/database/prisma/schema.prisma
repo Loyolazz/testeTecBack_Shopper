@@ -7,21 +7,40 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Customer {
+  id            String @id @default(uuid())
+  name          String
+  email         String @unique
+  password_hash String
+
+  Image   Image[]
+  Reading Reading[]
+
+  @@map("customer")
+}
+
 model Image {
-  id           String   @id @default(uuid())
-  customerCode String
-  imageUrl     String
-  createdAt    DateTime @default(now())
-  updatedAt    DateTime @updatedAt
+  id          String   @id @default(uuid())
+  customer_id String
+  base64      Bytes
+  created_at  DateTime @default(now())
+
+  customer Customer @relation(fields: [customer_id], references: [id])
+
+  @@map("image")
 }
 
 model Reading {
-  id              String   @id @default(uuid())
-  customerCode    String
-  value           Int
-  measureType     String
-  measureUuid     String
-  measureDatetime DateTime
-  createdAt       DateTime @default(now())
-  updatedAt       DateTime @updatedAt
+  id               String   @id @default(uuid())
+  customer_id      String
+  image_id         String
+  measure_value    Int
+  measure_type     String
+  measure_datetime DateTime
+  has_confirmed    Boolean
+  created_at       DateTime @default(now())
+
+  customer Customer @relation(fields: [customer_id], references: [id])
+
+  @@map("reading")
 }
