@@ -31,4 +31,29 @@ export class ReadingRepository extends Repository {
             },
         });
     }
+
+    async findReadingsByImageId(imageId: string): Promise<Reading[]> {
+        return this.db.reading.findMany({
+            where: {
+                image_id: imageId,
+            },
+        });
+    }
+
+    async findConflict(customerId: string, measureType: string): Promise<boolean> {
+        const currentDate = new Date();
+        const currentMonth = currentDate.getMonth();
+        const currentYear = currentDate.getFullYear();
+        const conflictingReadings = await this.db.reading.findMany({
+            where: {
+                customer_id: customerId,
+                measure_type: measureType,
+                measure_datetime: {
+                    gte: new Date(currentYear, currentMonth, 1),
+                    lt: new Date(currentYear, currentMonth + 1, 1),
+                },
+            },
+        });
+        return conflictingReadings.length > 0;
+    }
 }
