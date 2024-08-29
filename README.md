@@ -2,36 +2,37 @@
 
 # Teste Técnico Back-End
 
-This project is a backend service built with Node.js and TypeScript to manage water and gas consumption readings, with integration to the Google Gemini API for image processing.
+Este projeto é um serviço backend desenvolvido com Node.js e TypeScript para gerenciar leituras de consumo de água e 
+gás, com integração à API Google Gemini para processamento de imagens.
 
 ## Getting Started
 
-### Prerequisites
+### Pré-requisitos
 
 - Node.js v18.x
 - Docker & Docker Compose
 - PostgreSQL
 
-### Installation
+### Instalação
 
-1. Clone the repository:
+1. Clone o repositório:
    ```sh
-   git clone https://github.com/yourusername/yourproject.git
-   cd yourproject
+   git clone https://github.com/Loyolazz/testeTecBack_Shopper.git
+   cd testeTecBack_Shopper
 
-2. Install dependencies:
+2. Instale as dependências::
    ```sh
    npm install
 
-3. Set up environment variables:
+3. Configure as variáveis de ambiente:
    ```sh
    cp .env.example .env
    
-4. Build and start the Docker containers:
+4. Build e inicie os containers Docker:
    ```sh
    docker-compose up --build
 
-5. Entrar no Container
+5. Acesse o container:
    ```sh
    docker exec -it testetecback_shopper-app-1 /bin/sh
 
