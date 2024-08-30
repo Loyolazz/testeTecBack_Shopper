@@ -5,7 +5,7 @@ import { Repository } from "./Repository";
 export class ReadingRepository extends Repository {
     async create(readingData: CreateReadingDTO): Promise<Reading> {
         const reading = await this.db.reading.create({
-            data: readingData as any,
+            data: { ...readingData, measure_type: readingData.measure_type.toLocaleUpperCase() },
         });
 
         return reading;

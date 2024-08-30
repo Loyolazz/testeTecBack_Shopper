@@ -1,7 +1,8 @@
 import bcrypt from "bcrypt";
-import { CreateCustomerDTO } from "../dtos/customer.dto";
+import { CreateCustomerDTO, GetAllReadings } from "../dtos/customer.dto";
 import { Repository } from "./Repository";
 import { Customer } from "../entities/customer.entity";
+import { Reading } from "../entities/reading.entity";
 
 export class CustomerRepository extends Repository {
     async create(customerData: CreateCustomerDTO): Promise<void> {
@@ -22,5 +23,20 @@ export class CustomerRepository extends Repository {
                 email: email,
             },
         });
+    }
+
+    async getAllReading(data: GetAllReadings): Promise<Array<Reading>> {
+        return (await this.db.customer.findUnique({
+            where: {
+                id: data.customer_id,
+            },
+            select: {
+                Reading: {
+                    where: {
+                        measure_type: data.measure_type?.toLocaleUpperCase(),
+                    }
+                },
+            },
+        })).Reading as any;
     }
 }
