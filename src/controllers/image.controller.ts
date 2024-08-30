@@ -13,7 +13,7 @@ export const getImage = async (req: Request, res: Response): Promise<Response> =
         const image = await imageService.getImage({ id });
 
         const hasConflict = await imageService.checkConflict(image.id);
-        if (hasConflict) {
+        if (!hasConflict) {
             return res.status(409).json({ error: "DOUBLE_REPORT", error_description: "Leitura do mês já realizada" });
         }
 
@@ -25,9 +25,6 @@ export const getImage = async (req: Request, res: Response): Promise<Response> =
             "Content-Length": img.length,
         });
         res.end(img);
-        // res.status(200).type('image;jpeg').send(bufferToBase64);
-        // res.set("Content-Type", "text/html");
-        // res.send(Buffer.from(`<img src="data:image/jpeg;base64,${bufferToBase64}"/>`));
     } catch (error) {
         res.status(500).json({ error: "Erro ao buscar a imagem" });
     }

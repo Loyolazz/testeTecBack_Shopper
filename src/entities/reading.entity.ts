@@ -1,6 +1,6 @@
 export interface Reading {
     id: string;
-    customer_id: string;
+    customer_code: string;
     image_id: string;
     measure_value: number;
     measure_type: string;

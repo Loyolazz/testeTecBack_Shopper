@@ -43,7 +43,7 @@ export const confirmReading = async (req: Request, res: Response): Promise<any> 
 
         res.status(200).send({ success: true });
     } catch (error) {
-        console.log(error)
+        console.log(error);
         if (error == "404")
             res.status(404).json({
                 error_code: "MEASURE_NOT_FOUND",
@@ -56,6 +56,31 @@ export const confirmReading = async (req: Request, res: Response): Promise<any> 
                 error_description: "Leitura do mês já realizada",
             });
 
+        res.status(500).json({ error });
+    }
+};
+
+export const getAllReadings = async (req: Request, res: Response): Promise<any> => {
+    try {
+        const { customer_code } = req.params;
+        const { measure_type } = req.query as any;
+
+        const readings = await readingService.getAllReadings({ customer_code, measure_type });
+
+        res.status(200).json({
+            customer_code,
+            measures: readings.map((reading) => {
+                return {
+                    customer_code: reading.customer_code,
+                    measure_value: reading.measure_value,
+                    measure_datetime: reading.measure_datetime,
+                    measure_type: reading.measure_type,
+                    has_confirmed: false,
+                    image_url: `${process.env.BASE_URL}/image/${reading.image_id}`,
+                };
+            }),
+        });
+    } catch (error) {
         res.status(500).json({ error });
     }
 };

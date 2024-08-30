@@ -1,9 +1,9 @@
-import { ConfirmReadingDTO, CreateReadingDTORequest } from "../dtos/reading.dto";
+import { ConfirmReadingDTO, CreateReadingDTORequest, GetAllReadingsDTO } from "../dtos/reading.dto";
 import { ReadingRepository } from "../repositories/reading.repository";
 import { ImageRepository } from "../repositories/image.repository";
+import { Reading } from "../entities/reading.entity";
 
 import { gemini } from "../integrations/gemini";
-import { Reading } from "../entities/reading.entity";
 
 export class ReadingService {
     private readingRepository = new ReadingRepository();
@@ -27,12 +27,11 @@ export class ReadingService {
         ]);
 
         const savedImage = await this.imageRepository.create({
-            customer_id: readingData.customer_code,
             base64: Buffer.from(readingData.image, "base64"),
         });
 
         const savedReading = this.readingRepository.create({
-            customer_id: readingData.customer_code,
+            customer_code: readingData.customer_code,
             image_id: savedImage.id,
             measure_value: Number(geminiResponse.response.text()),
             measure_datetime: readingData.measure_datetime,
@@ -45,5 +44,9 @@ export class ReadingService {
 
     async confirmReading(readingData: ConfirmReadingDTO): Promise<void> {
         await this.readingRepository.update(readingData);
+    }
+
+    async getAllReadings(data: GetAllReadingsDTO): Promise<Array<Reading>> {
+        return await this.readingRepository.findAll(data);
     }
 }

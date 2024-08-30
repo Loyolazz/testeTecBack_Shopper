@@ -17,6 +17,6 @@ export class ImageService {
     async checkConflict(imageId: string): Promise<boolean> {
         const readings = await this.readingRepository.findReadingsByImageId(imageId);
         if (readings.length === 0) return false;
-        return await this.readingRepository.findConflict(readings[0].customer_id, readings[0].measure_type);
+        return await this.readingRepository.findConflict(readings[0].customer_code, readings[0].measure_type);
     }
 }

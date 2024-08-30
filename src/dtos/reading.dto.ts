@@ -1,5 +1,5 @@
 export interface CreateReadingDTO {
-    customer_id: string;
+    customer_code: string;
     image_id: string;
     measure_value: number;
     measure_type: string;
@@ -23,4 +23,9 @@ export interface CreateReadingResponseDTO {
 export interface ConfirmReadingDTO {
     measure_uuid: string;
     confirmed_value: number;
+}
+
+export interface GetAllReadingsDTO {
+    customer_code: string;
+    measure_type: string;
 }

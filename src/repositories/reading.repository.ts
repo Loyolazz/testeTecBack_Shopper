@@ -1,5 +1,5 @@
-import { Reading } from "@prisma/client";
-import { ConfirmReadingDTO, CreateReadingDTO } from "../dtos/reading.dto";
+import { Reading } from "../entities/reading.entity";
+import { ConfirmReadingDTO, CreateReadingDTO, GetAllReadingsDTO } from "../dtos/reading.dto";
 import { Repository } from "./Repository";
 
 export class ReadingRepository extends Repository {
@@ -46,7 +46,7 @@ export class ReadingRepository extends Repository {
         const currentYear = currentDate.getFullYear();
         const conflictingReadings = await this.db.reading.findMany({
             where: {
-                customer_id: customerId,
+                customer_code: customerId,
                 measure_type: measureType,
                 measure_datetime: {
                     gte: new Date(currentYear, currentMonth, 1),
@@ -55,5 +55,14 @@ export class ReadingRepository extends Repository {
             },
         });
         return conflictingReadings.length > 0;
+    }
+
+    async findAll(data: GetAllReadingsDTO): Promise<Array<Reading>> {
+        return await this.db.reading.findMany({
+            where: {
+                customer_code: data.customer_code,
+                measure_type: data.measure_type?.toLocaleUpperCase()
+            }
+        })
     }
 }
