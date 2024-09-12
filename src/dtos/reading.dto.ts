@@ -1,10 +1,10 @@
-export interface CreateReadingDTO {
-    customer_id: string;
-    image_id: string;
-    measure_value: number;
-    measure_type: string;
-    measure_datetime: Date;
-    has_confirmed: boolean;
+export interface CriarAnelDTO {
+    nome: string;
+    poder: string;
+    portador: string;
+    forjadoPor: string;
+    imagem: string;
+    portadorId: string;
 }
 
 export interface CreateReadingDTORequest {
@@ -20,7 +20,15 @@ export interface CreateReadingResponseDTO {
     measure_uuid: string;
 }
 
-export interface ConfirmReadingDTO {
-    measure_uuid: string;
-    confirmed_value: number;
+export interface AtualizarAnelDTO {
+    nome: string;
+    poder: string;
+    portador: string;
+    forjadoPor: string;
+    imagem: string;
+}
+
+export interface DeletarAnelDTO {
+    id: string;
+    portadorId: string;
 }

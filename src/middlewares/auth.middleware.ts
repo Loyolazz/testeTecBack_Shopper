@@ -18,7 +18,7 @@ export const authMiddleware = async (req: Request, res: Response, next: NextFunc
             return res.status(401).send({ error: "Token inválido" });
         }
 
-        req.body.customer_id = payload.id;
+        req.body.portadorId = payload.id;
 
         next();
     } catch (error) {

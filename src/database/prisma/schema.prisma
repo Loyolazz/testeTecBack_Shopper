@@ -7,6 +7,43 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
+model Portador {
+  id            String @id @default(uuid())
+  nome          String
+  email         String @unique
+  senha_hash String
+
+  Anel Anel[]
+
+  @@map("portador")
+}
+
+model Anel {
+  id         String @id @default(uuid())
+  nome       String
+  poder      String
+  portador   String
+  forjadoPor String
+  imagem     String
+
+  Portador   Portador? @relation(fields: [portadorId], references: [id])
+  portadorId String?
+
+  Forjador   Forjador @relation(fields: [forjadorId], references: [id])
+  forjadorId String
+
+  @@map("anel")
+}
+
+model Forjador {
+  id        String @id @default(uuid())
+  name      String
+  forjaMax Int
+  Anel      Anel[]
+
+  @@map("forjador")
+}
+
 model Customer {
   id            String @id @default(uuid())
   name          String

@@ -1,7 +1,7 @@
 {
-  "name": "testetecback_shopper",
+  "name": "testeanel",
   "version": "1.0.0",
-  "description": "Teste Técnico Back-End - Shopper - Web Full-Stack Júnior",
+  "description": "description...",
   "main": "index.js",
   "scripts": {
     "build": "tsc",

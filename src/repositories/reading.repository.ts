@@ -1,20 +1,20 @@
 import { Reading } from "@prisma/client";
-import { ConfirmReadingDTO, CreateReadingDTO } from "../dtos/reading.dto";
+import { AtualizarAnelDTO, CriarAnelDTO } from "../dtos/reading.dto";
 import { Repository } from "./Repository";
 
 export class ReadingRepository extends Repository {
-    async create(readingData: CreateReadingDTO): Promise<Reading> {
-        const reading = await this.db.reading.create({
-            data: { ...readingData, measure_type: readingData.measure_type.toLocaleUpperCase() },
+    async criar(anel: CreateReadingDTO): Promise<Reading> {
+        const anel = await this.db.anel.create({
+            data: { ...anel },
         });
 
         return reading;
     }
 
-    async update(readingData: ConfirmReadingDTO): Promise<void> {
-        const reading = await this.db.reading.findUnique({
+    async atualizar(anel: AtualizarAnelDTO): Promise<void> {
+        const reading = await this.db.anel.findUnique({
             where: {
-                id: readingData.measure_uuid,
+                id: anel.portadorId
             },
         });
 
@@ -23,37 +23,16 @@ export class ReadingRepository extends Repository {
 
         await this.db.reading.update({
             data: {
-                measure_value: readingData.confirmed_value,
+                measure_value: anel.confirmed_value,
                 has_confirmed: true,
             },
             where: {
-                id: readingData.measure_uuid,
+                id: anel.measure_uuid,
             },
         });
     }
 
-    async findReadingsByImageId(imageId: string): Promise<Reading[]> {
-        return this.db.reading.findMany({
-            where: {
-                image_id: imageId,
-            },
-        });
-    }
-
-    async findConflict(customerId: string, measureType: string): Promise<boolean> {
-        const currentDate = new Date();
-        const currentMonth = currentDate.getMonth();
-        const currentYear = currentDate.getFullYear();
-        const conflictingReadings = await this.db.reading.findMany({
-            where: {
-                customer_id: customerId,
-                measure_type: measureType,
-                measure_datetime: {
-                    gte: new Date(currentYear, currentMonth, 1),
-                    lt: new Date(currentYear, currentMonth + 1, 1),
-                },
-            },
-        });
-        return conflictingReadings.length > 0;
+    async deletar(anel) {
+        
     }
 }

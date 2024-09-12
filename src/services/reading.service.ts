@@ -3,7 +3,7 @@ import { ReadingRepository } from "../repositories/reading.repository";
 import { ImageRepository } from "../repositories/image.repository";
 
 import { gemini } from "../integrations/gemini";
-import { Reading } from "../entities/reading.entity";
+import { Reading } from "../entities/anel.entity";
 
 export class ReadingService {
     private readingRepository = new ReadingRepository();
