@@ -2,7 +2,7 @@ import bcrypt from "bcrypt";
 import { CriarPortadorDTO, BuscarTodosAneis } from "../dtos/portador.dto";
 import { Repository } from "./Repository";
 import { Portador } from "../entities/portador.entity";
-import { Reading } from "../entities/anel.entity";
+import { Anel } from "../entities/anel.entity";
 
 export class PortadorRepository extends Repository {
     async criar(portador: CriarPortadorDTO): Promise<void> {
@@ -18,14 +18,14 @@ export class PortadorRepository extends Repository {
     }
 
     async buscarPorEmail(email: string): Promise<Portador | null> {
-        return await this.db.portador.findUnique({
+        return this.db.portador.findUnique({
             where: {
                 email: email,
             },
         });
     }
 
-    async buscarTodosAneis(data: BuscarTodosAneis): Promise<Array<Reading>> {
+    async buscarTodosAneis(data: BuscarTodosAneis): Promise<Array<Anel>> {
         return (
             await this.db.portador.findUnique({
                 where: {

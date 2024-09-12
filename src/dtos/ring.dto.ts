@@ -5,19 +5,7 @@ export interface CriarAnelDTO {
     forjadoPor: string;
     imagem: string;
     portadorId: string;
-}
-
-export interface CreateReadingDTORequest {
-    image: string;
-    customer_code: string;
-    measure_datetime: Date;
-    measure_type: string;
-}
-
-export interface CreateReadingResponseDTO {
-    image_url: string;
-    measure_value: number;
-    measure_uuid: string;
+    forjadorId: string;
 }
 
 export interface AtualizarAnelDTO {

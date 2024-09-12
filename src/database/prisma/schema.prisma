@@ -8,9 +8,9 @@ datasource db {
 }
 
 model Portador {
-  id            String @id @default(uuid())
-  nome          String
-  email         String @unique
+  id         String @id @default(uuid())
+  nome       String
+  email      String @unique
   senha_hash String
 
   Anel Anel[]
@@ -36,48 +36,10 @@ model Anel {
 }
 
 model Forjador {
-  id        String @id @default(uuid())
-  name      String
+  id       String @id @default(uuid())
+  name     String
   forjaMax Int
-  Anel      Anel[]
+  Anel     Anel[]
 
   @@map("forjador")
-}
-
-model Customer {
-  id            String @id @default(uuid())
-  name          String
-  email         String @unique
-  password_hash String
-
-  Image   Image[]
-  Reading Reading[]
-
-  @@map("customer")
-}
-
-model Image {
-  id          String   @id @default(uuid())
-  customer_id String
-  base64      Bytes
-  created_at  DateTime @default(now())
-
-  customer Customer @relation(fields: [customer_id], references: [id])
-
-  @@map("image")
-}
-
-model Reading {
-  id               String   @id @default(uuid())
-  customer_id      String
-  image_id         String
-  measure_value    Int
-  measure_type     String
-  measure_datetime DateTime
-  has_confirmed    Boolean
-  created_at       DateTime @default(now())
-
-  customer Customer @relation(fields: [customer_id], references: [id])
-
-  @@map("reading")
 }
